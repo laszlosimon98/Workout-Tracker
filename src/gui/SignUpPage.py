@@ -118,18 +118,18 @@ class SignUpPage(MainGUI):
         else:
             self.wrong_password2_label.configure(text="")
 
-        if not self.password_check(str(password)) and not self.password_check(str(password2)):
+        if not self.password_check(str(password)):
             self.password_entry.configure(border_color="red")
-            self.password2_entry.configure(border_color="red")
         else:
             self.password_entry.configure(border_color="green")
-            self.password2_entry.configure(border_color="green")
 
         if password != password2:
             self.wrong_password_label.configure(text="A jelszavaknak meg\n kell egyeznie!")
             self.wrong_password2_label.configure(text="A jelszavaknak meg\n kell egyeznie!")
             self.password_entry.configure(border_color="red")
             self.password2_entry.configure(border_color="red")
+        else:
+            self.password2_entry.configure(border_color="green")
 
         return self.wrong_username_label.text == '' and self.wrong_password_label.text == '' and \
                self.wrong_password2_label.text == ''
