@@ -36,7 +36,8 @@ class LoginPage(MainGUI):
                           self.remember_me_checkbox, self.sign_up_button)
 
     def login(self):
-        self.destroy_elements()
+        print("login")
+        # self.destroy_elements()
 
     def from_login_page_to_sign_up_page(self):
         self.destroy_elements()

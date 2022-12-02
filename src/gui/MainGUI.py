@@ -1,7 +1,5 @@
 import customtkinter
 
-from src.config.settings import PADY
-
 
 class MainGUI:
     def __init__(self, root, main):

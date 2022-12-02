@@ -5,12 +5,12 @@ import sqlite3
 class Database:
     def __init__(self):
         self.connect = None
-        self.connection = sqlite3.connect(":memory:")
+        self.connection = sqlite3.connect("workout.db")
 
     def create_table(self, table):
         with self.connection:
             self.connect = self.connection.cursor()
-            self.connect.execute(f"""CREATE TABLE {table} (
+            self.connect.execute(f"""CREATE TABLE IF NOT EXISTS {table} (
                                     name_id INTEGER PRIMARY KEY AUTOINCREMENT,
                                     username varchar(15) NOT NULL,
                                     password varchar(255) NOT NULL

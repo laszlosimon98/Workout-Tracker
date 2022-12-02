@@ -1,5 +1,6 @@
 from src.gui.LoginPage import LoginPage
 from src.gui.SignUpPage import SignUpPage
+from src.database.Database import Database
 
 import customtkinter
 
@@ -14,6 +15,9 @@ class Main:
         self.root.state("zoomed")
         self.root.title("Workout Diary")
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+        self.db = Database()
+        self.db.create_table("Users")
 
         self.current_page = LoginPage(self.root, self)
 
@@ -33,8 +37,3 @@ class Main:
 if __name__ == '__main__':
     m = Main()
     m.run()
-
-    # database = database()
-    # database.createTable("Test")
-    # database.insert_into_table("Test")
-    # database.get_data_from_table("Test")

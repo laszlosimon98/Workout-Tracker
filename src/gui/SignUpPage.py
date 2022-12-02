@@ -3,7 +3,9 @@ import re
 import customtkinter
 
 from src.config.settings import LABEL_ENTRY_WIDTH, PADX, PADY
+from src.domain.Person import Person
 from src.gui.MainGUI import MainGUI
+from src.database.Database import Database
 
 
 class SignUpPage(MainGUI):
@@ -60,6 +62,8 @@ class SignUpPage(MainGUI):
                           self.password2_entry, self.sign_up_button, self.back_button, self.wrong_password_label,
                           self.wrong_password2_label, self.wrong_username_label, self.password_hint_label0,
                           self.password_hint_label1, self.password_hint_label2, self.password_hint_label3)
+
+        self.db = Database()
 
     def from_sign_up_page_to_login_page(self):
         self.destroy_elements()
@@ -137,7 +141,10 @@ class SignUpPage(MainGUI):
 
     def sign_up(self):
         if self.inputs_are_valid(self.username_entry.get(), self.password_entry.get(), self.password2_entry.get()):
-            pass
-            # person = Person(username, password)
-            # self.destroy_elements()
-            # self.main.to_login_page()
+            username = str(self.username_entry.get())
+            password = str(self.password_entry.get())
+            person = Person(username, password)
+            self.db.insert_user_into_table("Users", person)
+            self.db.get_data_from_table("Users")
+            self.destroy_elements()
+            self.main.to_login_page()
