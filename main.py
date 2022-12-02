@@ -11,7 +11,7 @@ customtkinter.set_default_color_theme("green")
 class Main:
     def __init__(self):
         self.root = customtkinter.CTk()
-        self.root.geometry("600x400")
+        self.root.state("zoomed")
         self.root.title("Workout Diary")
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
 
