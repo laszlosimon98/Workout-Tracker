@@ -18,6 +18,7 @@ class Main:
 
         self.db = Database()
         self.db.create_table("Users")
+        self.db.get_data_from_table("Users")
 
         self.current_page = LoginPage(self.root, self)
 

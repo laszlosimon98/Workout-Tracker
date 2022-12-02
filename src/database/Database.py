@@ -19,11 +19,18 @@ class Database:
     def insert_user_into_table(self, table, user):
         with self.connection:
             self.connect = self.connection.cursor()
-            self.connect.execute(f"INSERT INTO {table}(username, password) VALUES (:username, :password)",
+            self.connect.execute(f"INSERT INTO {table}(username, password) VALUES (:username, :password);",
                                  {"username": user.name, "password": hashlib.md5(user.password.encode()).hexdigest()})
+            self.connect.execute("commit;")
 
     def get_data_from_table(self, table):
         with self.connection:
             self.connect = self.connection.cursor()
             for row in self.connect.execute(f"SELECT * FROM {table}"):
                 print(row)
+
+    def remove_data_from_table(self, table, id):
+        with self.connection:
+            self.connect = self.connection.cursor()
+            self.connect.execute(f"DELETE FROM {table} WHERE name_id = {id};")
+            self.connect.execute("commit;")
