@@ -27,7 +27,7 @@ class MainGUI:
         self.middle_frame.rowconfigure(6, weight=1)
 
         self.right_frame.rowconfigure(0, weight=1)
-        self.right_frame.rowconfigure(4, weight=1)
+        self.right_frame.rowconfigure(5, weight=1)
         # self.right_frame.rowconfigure(0, minsize=95)
         # self.right_frame.rowconfigure(2, minsize=25)
         # self.right_frame.rowconfigure(4, minsize=25)
