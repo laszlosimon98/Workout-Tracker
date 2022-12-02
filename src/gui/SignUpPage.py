@@ -35,14 +35,13 @@ class SignUpPage(MainGUI):
         self.sign_up_button.grid(row=5, column=0, pady=(0, PADY), padx=PADX, sticky="ns")
         self.back_button.grid(row=6, column=0, pady=(0, PADY), padx=PADX, sticky="n")
 
-        self.wrong_username_label = customtkinter.CTkLabel(master=self.right_frame, text_color="red", width=70, text="")
-        self.wrong_password_label = customtkinter.CTkLabel(master=self.right_frame, text_color="red", width=70, text="")
-        self.wrong_password2_label = customtkinter.CTkLabel(master=self.right_frame, text_color="red", width=70,
-                                                            text="")
+        self.wrong_username_label = customtkinter.CTkLabel(master=self.right_frame, text_color="red")
+        self.wrong_password_label = customtkinter.CTkLabel(master=self.right_frame, text_color="red", text="")
+        self.wrong_password2_label = customtkinter.CTkLabel(master=self.right_frame, text_color="red", text="")
 
-        self.wrong_username_label.grid(row=1, column=0, sticky="w")
-        self.wrong_password_label.grid(row=3, column=0, sticky="w")
-        self.wrong_password2_label.grid(row=5, column=0, sticky="w")
+        self.wrong_username_label.grid(row=1, column=0, sticky="nsw", pady=PADY, padx=PADX)
+        # self.wrong_password_label.grid(row=3, column=0, sticky="w")
+        # self.wrong_password2_label.grid(row=5, column=0, sticky="w")
 
         self.password_hint_label0 = customtkinter.CTkLabel(master=self.left_frame, text="Jelszó:")
         self.password_hint_label1 = customtkinter.CTkLabel(master=self.left_frame, text_color="red", width=50,
@@ -52,10 +51,10 @@ class SignUpPage(MainGUI):
         self.password_hint_label3 = customtkinter.CTkLabel(master=self.left_frame, text_color="red", width=50,
                                                            text="8 karakter hosszú")
 
-        self.password_hint_label0.grid(row=1, column=1, sticky="e")
-        self.password_hint_label1.grid(row=2, column=1, sticky="e")
-        self.password_hint_label2.grid(row=3, column=1, sticky="e")
-        self.password_hint_label3.grid(row=4, column=1, sticky="e")
+        # self.password_hint_label0.grid(row=1, column=1, sticky="e")
+        # self.password_hint_label1.grid(row=2, column=1, sticky="e")
+        # self.password_hint_label2.grid(row=3, column=1, sticky="e")
+        # self.password_hint_label3.grid(row=4, column=1, sticky="e")
 
         self.add_elements(self.label, self.username_entry, self.password_entry,
                           self.password2_entry, self.sign_up_button, self.back_button, self.wrong_password_label,
