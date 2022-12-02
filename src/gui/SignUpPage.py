@@ -1,3 +1,5 @@
+import re
+
 import customtkinter
 
 from src.gui.MainGUI import MainGUI
@@ -7,24 +9,24 @@ class SignUpPage(MainGUI):
     def __init__(self, root, main):
         super().__init__(root, main)
 
-        self.label = customtkinter.CTkLabel(master=self.left_frame, text="Sign Up")
-        self.label.grid(row=1, column=0, pady=15, padx=10, sticky="nse")
+        self.label = customtkinter.CTkLabel(master=self.middle_frame, text="Sign Up")
+        self.label.grid(row=1, column=0, pady=15, padx=10, sticky="nswe")
 
-        self.username_entry = customtkinter.CTkEntry(master=self.left_frame, placeholder_text="Username")
-        self.username_entry.grid(row=2, column=0, pady=(0, 15), padx=10, sticky="nse")
+        self.username_entry = customtkinter.CTkEntry(master=self.middle_frame, placeholder_text="Username")
+        self.username_entry.grid(row=2, column=0, pady=(0, 15), padx=10, sticky="nswe")
 
-        self.password_entry = customtkinter.CTkEntry(master=self.left_frame, placeholder_text="Password", show="*")
-        self.password_entry.grid(row=3, column=0, pady=(0, 15), padx=10, sticky="nse")
+        self.password_entry = customtkinter.CTkEntry(master=self.middle_frame, placeholder_text="Password", show="*")
+        self.password_entry.grid(row=3, column=0, pady=(0, 15), padx=10, sticky="nswe")
 
-        self.password2_entry = customtkinter.CTkEntry(master=self.left_frame, placeholder_text="Password", show="*")
-        self.password2_entry.grid(row=4, column=0, pady=(0, 25), padx=10, sticky="nse")
+        self.password2_entry = customtkinter.CTkEntry(master=self.middle_frame, placeholder_text="Password", show="*")
+        self.password2_entry.grid(row=4, column=0, pady=(0, 25), padx=10, sticky="nswe")
 
-        self.sign_up_button = customtkinter.CTkButton(master=self.left_frame, text="Sign Up", command=self.sign_up)
-        self.sign_up_button.grid(row=5, column=0, pady=(0, 20), padx=10, sticky="nse")
+        self.sign_up_button = customtkinter.CTkButton(master=self.middle_frame, text="Sign Up", command=self.sign_up)
+        self.sign_up_button.grid(row=5, column=0, pady=(0, 20), padx=10, sticky="nswe")
 
-        self.back_button = customtkinter.CTkButton(master=self.left_frame, text="Back",
+        self.back_button = customtkinter.CTkButton(master=self.middle_frame, text="Back",
                                                    command=self.from_sign_up_page_to_login_page)
-        self.back_button.grid(row=6, column=0, pady=(0, 10), padx=10, sticky="nse")
+        self.back_button.grid(row=6, column=0, pady=(0, 10), padx=10, sticky="nswe")
 
         self.wrong_username_label = customtkinter.CTkLabel(master=self.right_frame, text_color="red", width=70, text="")
         self.wrong_password_label = customtkinter.CTkLabel(master=self.right_frame, text_color="red", width=70, text="")
@@ -35,19 +37,56 @@ class SignUpPage(MainGUI):
         self.wrong_password_label.grid(row=3, column=0, sticky="w")
         self.wrong_password2_label.grid(row=5, column=0, sticky="w")
 
+        self.password_hint_label0 = customtkinter.CTkLabel(master=self.left_frame, text="Jelszó:")
+        self.password_hint_label1 = customtkinter.CTkLabel(master=self.left_frame, text_color="red", width=50,
+                                                           text="1 nagybetű")
+        self.password_hint_label2 = customtkinter.CTkLabel(master=self.left_frame, text_color="red", width=50,
+                                                           text="2 szám")
+        self.password_hint_label3 = customtkinter.CTkLabel(master=self.left_frame, text_color="red", width=50,
+                                                           text="8 karakter hosszú")
+
+        self.password_hint_label0.grid(row=1, column=1, sticky="e")
+        self.password_hint_label1.grid(row=2, column=1, sticky="e")
+        self.password_hint_label2.grid(row=3, column=1, sticky="e")
+        self.password_hint_label3.grid(row=4, column=1, sticky="e")
+
         self.add_elements(self.label, self.username_entry, self.password_entry,
                           self.password2_entry, self.sign_up_button, self.back_button, self.wrong_password_label,
-                          self.wrong_password2_label, self.wrong_username_label)
+                          self.wrong_password2_label, self.wrong_username_label, self.password_hint_label0,
+                          self.password_hint_label1, self.password_hint_label2, self.password_hint_label3)
 
     def from_sign_up_page_to_login_page(self):
         self.destroy_elements()
         self.main.to_login_page()
 
-    def sign_up(self):
-        username = self.username_entry.get()
-        password = self.password_entry.get()
-        password2 = self.password2_entry.get()
+    def password_check(self, password):
+        one_capital_letter = r"[A-Z]{1,}"
+        two_number = r"^[^\d]*(\d+)[^\d]*(\d+)"
+        length = r"^[\w]{8,}$"
+        is_ok = [False for _ in range(3)]
 
+        if re.search(one_capital_letter, password):
+            self.password_hint_label1.configure(text_color="green")
+            is_ok[0] = True
+        else:
+            self.password_hint_label1.configure(text_color="red")
+            is_ok[0] = False
+        if re.match(two_number, password):
+            self.password_hint_label2.configure(text_color="green")
+            is_ok[1] = True
+        else:
+            self.password_hint_label2.configure(text_color="red")
+            is_ok[1] = False
+        if re.match(length, password):
+            self.password_hint_label3.configure(text_color="green")
+            is_ok[2] = True
+        else:
+            self.password_hint_label3.configure(text_color="red")
+            is_ok[2] = False
+
+        return all(is_ok)
+
+    def inputs_are_valid(self, username, password, password2=None):
         if len(username) == 0:
             self.wrong_username_label.configure(text="Kötelező!")
             self.username_entry.configure(border_color="red")
@@ -56,7 +95,7 @@ class SignUpPage(MainGUI):
             self.username_entry.configure(border_color="red")
         else:
             self.wrong_username_label.configure(text="")
-            self.username_entry.configure(border_color="gray32")
+            self.username_entry.configure(border_color="green")
 
         if len(password) == 0:
             self.wrong_password_label.configure(text="Kötelező!")
@@ -66,7 +105,6 @@ class SignUpPage(MainGUI):
             self.password_entry.configure(border_color="red")
         else:
             self.wrong_password_label.configure(text="")
-            self.password_entry.configure(border_color="gray32")
 
         if len(password2) == 0:
             self.wrong_password2_label.configure(text="Kötelező!")
@@ -76,16 +114,25 @@ class SignUpPage(MainGUI):
             self.password2_entry.configure(border_color="red")
         else:
             self.wrong_password2_label.configure(text="")
-            self.password2_entry.configure(border_color="gray32")
 
-        if len(password) > 0 and password != password2:
+        if not self.password_check(str(password)) and not self.password_check(str(password2)):
+            self.password_entry.configure(border_color="red")
+            self.password2_entry.configure(border_color="red")
+        else:
+            self.password_entry.configure(border_color="green")
+            self.password2_entry.configure(border_color="green")
+
+        if password != password2:
             self.wrong_password_label.configure(text="A jelszavaknak meg\n kell egyeznie!")
             self.wrong_password2_label.configure(text="A jelszavaknak meg\n kell egyeznie!")
             self.password_entry.configure(border_color="red")
             self.password2_entry.configure(border_color="red")
 
-        if self.wrong_username_label.text == "" and self.wrong_password_label.text == "" \
-                and self.wrong_password2_label.text == "":
+        return self.wrong_username_label.text == '' and self.wrong_password_label.text == '' and \
+               self.wrong_password2_label.text == ''
+
+    def sign_up(self):
+        if self.inputs_are_valid(self.username_entry.get(), self.password_entry.get(), self.password2_entry.get()):
             pass
             # person = Person(username, password)
             # self.destroy_elements()
