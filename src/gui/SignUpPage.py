@@ -11,27 +11,28 @@ class SignUpPage(MainGUI):
         super().__init__(root, main)
 
         self.label = customtkinter.CTkLabel(master=self.middle_frame, text="Sign Up", width=LABEL_ENTRY_WIDTH)
-        self.label.grid(row=1, column=0, pady=PADY, padx=PADX, sticky="nswe")
 
         self.username_entry = customtkinter.CTkEntry(master=self.middle_frame, placeholder_text="Username",
                                                      width=LABEL_ENTRY_WIDTH)
-        self.username_entry.grid(row=2, column=0, pady=(0, PADY), padx=PADX, sticky="ns")
 
         self.password_entry = customtkinter.CTkEntry(master=self.middle_frame, placeholder_text="Password", show="*",
                                                      width=LABEL_ENTRY_WIDTH)
-        self.password_entry.grid(row=3, column=0, pady=(0, PADY), padx=PADX, sticky="ns")
 
         self.password2_entry = customtkinter.CTkEntry(master=self.middle_frame, placeholder_text="Password", show="*",
                                                       width=LABEL_ENTRY_WIDTH)
-        self.password2_entry.grid(row=4, column=0, pady=(0, PADY), padx=PADX, sticky="ns")
 
         self.sign_up_button = customtkinter.CTkButton(master=self.middle_frame, text="Sign Up", command=self.sign_up,
                                                       width=LABEL_ENTRY_WIDTH)
-        self.sign_up_button.grid(row=5, column=0, pady=(0, PADY), padx=PADX, sticky="ns")
 
         self.back_button = customtkinter.CTkButton(master=self.middle_frame, text="Back",
                                                    command=self.from_sign_up_page_to_login_page,
                                                    width=LABEL_ENTRY_WIDTH)
+
+        self.label.grid(row=1, column=0, pady=PADY, padx=PADX, sticky="nswe")
+        self.username_entry.grid(row=2, column=0, pady=(0, PADY), padx=PADX, sticky="ns")
+        self.password_entry.grid(row=3, column=0, pady=(0, PADY), padx=PADX, sticky="ns")
+        self.password2_entry.grid(row=4, column=0, pady=(0, PADY), padx=PADX, sticky="ns")
+        self.sign_up_button.grid(row=5, column=0, pady=(0, PADY), padx=PADX, sticky="ns")
         self.back_button.grid(row=6, column=0, pady=(0, PADY), padx=PADX, sticky="n")
 
         self.wrong_username_label = customtkinter.CTkLabel(master=self.right_frame, text_color="red", width=70, text="")
